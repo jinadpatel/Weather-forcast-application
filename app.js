@@ -14,11 +14,19 @@ myApp.config(function($routeProvider, $locationProvider){
     })
 });
 
+//CUSTOM SERVICE
+myApp.service('dataService', function(){
+   this.cityService = 'New York, NY' 
+});
+
 //CONTROLLER
-myApp.controller('homeController', ['$scope', function($scope){
-    
+myApp.controller('homeController', ['$scope', 'dataService', function($scope, dataService){
+$scope.enteredCity = dataService.cityService;
+    $scope.$watch('enteredCity', function(){
+       dataService.cityService = $scope.enteredCity; 
+    });
 }]);
 
-myApp.controller('forecastCOntroller', ['$scope', function($scope){
-    
+myApp.controller('forecastController', ['$scope', 'dataService', function($scope, dataService){
+    $scope.receivedCity = dataService.cityService;
 }]);
