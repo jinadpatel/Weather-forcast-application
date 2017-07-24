@@ -1,23 +1,15 @@
 Forecast for {{receivedCity}}
 
 <div>
-                <a href="#/forecast/2">2</a> |
-                    <a href="#/forecast/5">5</a> |
-                    <a href="#/forecast/7">7</a>
+            Days:    <a href="#/forecast/2" ng-class="{'bg-primary': days === '2'}">2</a> |
+                    <a href="#/forecast/5" ng-class="{'bg-primary': days === '5'}">5</a> |
+                    <a href="#/forecast/7" ng-class="{'bg-primary': days === '7'}">7</a>
                 </div>
 
 <div ng-repeat="w in weatherResult.list">
     <div class="row">
         <div class="col-md-12">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h3 class="panel-title">{{dateConverter(w.dt) | date: 'MMMM, dd yyyy'}}</h3>
-                </div>
-                <div class="panel-body">
-                    Daytime temperature: {{convertToFaranheit(w.temp.day)}}<br />
-                    Night temperature: {{convertToFaranheit(w.temp.night)}}
-                </div>
-            </div>
+            <weather-report weather-day="w" convert-to-standard="convertToFaranheit(degreeKelvin)" convert-to-date="dateConverter(dt)" date-format="MMMM, d y"></weather-report>
         </div>
     </div>
 </div>

@@ -33,9 +33,9 @@ $scope.enteredCity = dataService.cityService;
 
 myApp.controller('forecastController', ['$scope', '$resource', '$routeParams', 'dataService', function($scope, $resource, $routeParams, dataService){
     $scope.receivedCity = dataService.cityService;
-    
+    $scope.days = $routeParams.num;
     $scope.weatherAPI = $resource('http://api.openweathermap.org/data/2.5/forecast/daily?APPID=d755dcd3e6712fa7c51b479098be0c77');
-    $scope.weatherResult = $scope.weatherAPI.get({ q: $scope.receivedCity, cnt: $routeParams.num || 2});
+    $scope.weatherResult = $scope.weatherAPI.get({ q: $scope.receivedCity, cnt: $scope.days || '2'});
     //console.log($scope.weatherResult);
     
                                         
@@ -48,3 +48,18 @@ myApp.controller('forecastController', ['$scope', '$resource', '$routeParams', '
       return new Date(date*1000);  
     };
 }]);
+
+//CUSTOM DIRECTIVE
+myApp.directive('weatherReport', function(){
+   return {
+       restrict: 'E',
+       templateUrl: 'directives/weatherReport.html',
+       replace: true,
+       scope: {
+           weatherDay: '=',
+           convertToStandard: '&',
+           convertToDate: '&',
+           dateFormat: '@'
+       }
+   } 
+});
