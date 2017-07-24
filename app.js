@@ -31,10 +31,14 @@ myApp.controller('forecastController', ['$scope', '$resource', 'dataService', fu
     $scope.receivedCity = dataService.cityService;
     
     $scope.weatherAPI = $resource('http://api.openweathermap.org/data/2.5/forecast/daily?APPID=d755dcd3e6712fa7c51b479098be0c77');
-    $scope.weatherResult = $scope.weatherAPI.get({ q: $scope.receivedCity, cnt: 2});
+    $scope.weatherResult = $scope.weatherAPI.get({ q: $scope.receivedCity, cnt: 7});
     //console.log($scope.weatherResult);
     $scope.convertToFaranheit = function(kelvin){
       var faranheit = Math.round(((kelvin - 273)*1.8) + 32);
         return faranheit;
+    };
+    
+    $scope.dateConverter = function(date){
+      return new Date(date*1000);  
     };
 }]);
