@@ -12,6 +12,10 @@ myApp.config(function($routeProvider, $locationProvider){
         templateUrl: 'pages/forecast.html',
         controller: 'forecastController'
     })
+    .when('/forecast/:num', {
+          templateUrl: 'pages/forecast.html',
+          controller: 'forecastController'
+          })
 });
 
 //CUSTOM SERVICE
@@ -27,12 +31,14 @@ $scope.enteredCity = dataService.cityService;
     });
 }]);
 
-myApp.controller('forecastController', ['$scope', '$resource', 'dataService', function($scope, $resource, dataService){
+myApp.controller('forecastController', ['$scope', '$resource', '$routeParams', 'dataService', function($scope, $resource, $routeParams, dataService){
     $scope.receivedCity = dataService.cityService;
     
     $scope.weatherAPI = $resource('http://api.openweathermap.org/data/2.5/forecast/daily?APPID=d755dcd3e6712fa7c51b479098be0c77');
-    $scope.weatherResult = $scope.weatherAPI.get({ q: $scope.receivedCity, cnt: 7});
+    $scope.weatherResult = $scope.weatherAPI.get({ q: $scope.receivedCity, cnt: $routeParams.num || 2});
     //console.log($scope.weatherResult);
+    
+                                        
     $scope.convertToFaranheit = function(kelvin){
       var faranheit = Math.round(((kelvin - 273)*1.8) + 32);
         return faranheit;
