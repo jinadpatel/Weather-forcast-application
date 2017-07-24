@@ -24,11 +24,15 @@ myApp.service('dataService', function(){
 });
 
 //CONTROLLER
-myApp.controller('homeController', ['$scope', 'dataService', function($scope, dataService){
+myApp.controller('homeController', ['$scope', '$location', 'dataService', function($scope, $location, dataService){
 $scope.enteredCity = dataService.cityService;
     $scope.$watch('enteredCity', function(){
        dataService.cityService = $scope.enteredCity; 
     });
+    
+    $scope.submit=function(){
+        $location.path("/forecast");
+    }
 }]);
 
 myApp.controller('forecastController', ['$scope', '$resource', '$routeParams', 'dataService', function($scope, $resource, $routeParams, dataService){
